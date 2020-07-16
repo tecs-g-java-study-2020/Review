@@ -16,7 +16,6 @@ public class SaveSurvey extends HttpServlet {
        
     public SaveSurvey() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,18 +28,18 @@ public class SaveSurvey extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 		
-		//文字コードを設定
-		response.setContentType("text/heml;charset=UTF-8");
+		//文字コード設定
+		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-		//リクエストパラメーター取得
+		//rikueasutoparame-ta取得
 		String name = request.getParameter("NAME");
 		int age = Integer.parseInt(request.getParameter("AGE"));
 		int sex = Integer.parseInt(request.getParameter("SEX"));
 		int satisfactionLevel = Integer.parseInt(request.getParameter("SATISFACTION_LEVEL"));
 		String message = request.getParameter("MESSAGE");
 		
-		//アンケートデータの作成（SurveyDto型）
+		//anke-todata（SurveyDto型）
 		SurveyDto dto = new SurveyDto();
 		dto.setName(name);
 		dto.setAge(age);

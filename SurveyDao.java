@@ -2,6 +2,7 @@ package work;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -18,7 +19,7 @@ public class SurveyDao{
 	//JDBCの相対パス
 	String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
 	//接続先のデータベース
-	String JDBC_URL = "jdbc:mysql://localhost/test_db?characterEncodeing=UTF-8&serverTimezone=JST&useSSLfalse";
+	String JDBC_URL = "jdbc:mysql://localhost/test_db?characterEncoding=UTF-8&serverTimezone=JST&useSSLfalse";
 	//接続するユーザー名
 	String JDBC_ID = "test_user";
 	//接続するユーザーのパスワード
@@ -41,15 +42,16 @@ public class SurveyDao{
 		Connection con = null;
 		PreparedStatement ps = null;
 		
+		
 		//実行結果格納用変数
 		
 		boolean isSucces = true;
 		
 		try {
-			
-			con = DriverManeger.getConnection(JDBC_NAME,USER_ID,USER_PASS);
-			
-			con.setAUtoCommit(false);
+			//接続の確立
+			con = DriverManager.getConnection(JDBC_URL,JDBC_ID,JDBC_PASS);
+			//オートコミットをオフにする　トランザクションの開始
+			con.setAutoCommit(false);
 			
 			//パラメーターセット
 			StringBuffer buf = new StringBuffer();
@@ -60,14 +62,14 @@ public class SurveyDao{
 			buf.append("SATISFACTION_LEVEL,");
 			buf.append("MESSAGE,");
 			buf.append("TIME");
-			buf.append("}VALUE{");
+			buf.append(")VALUES(");
 			buf.append("?,");
 			buf.append("?,");
 			buf.append("?,");
 			buf.append("?,");
 			buf.append("?,");
 			buf.append("?");
-			buf.append("}");
+			buf.append(")");
 			
 			//PreparedStatementオブジェクトを生成、発行するSQL
 			ps = con.prepareStatement(buf.toString());
